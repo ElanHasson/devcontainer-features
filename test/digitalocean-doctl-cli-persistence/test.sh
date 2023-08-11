@@ -23,6 +23,12 @@ check "dc" bash -c "ls -la /dc | grep 'digitalocean-doctl-cli'"
 # https://unix.stackexchange.com/a/96910
 check "~/.config/doctl is a symlink" bash -c "test -L ~/.config/doctl && test -d ~/.config/doctl"
 
+# check that the folders are owned by the user
+# `stat -c "%U %G" ~/.config` returns "$USER $GROUP", in this case "node node"
+# https://askubuntu.com/a/175060
+check "~/.config/doctl owned by user" bash -c "test \"$(stat -c "%U %G" ~/.config)\" = 'node node'"
+check "/dc/digitalocean-doctl-cli owned by user" bash -c "test \"$(stat -c "%U %G" /dc/digitalocean-doctl-cli)\" = 'node node'"
+
 # Report result
 reportResults
 

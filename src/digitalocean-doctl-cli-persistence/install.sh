@@ -14,6 +14,7 @@ fi
 # make ~/.config folder if doesn't exist
 mkdir -p "$_REMOTE_USER_HOME/.config"
 mkdir -p "/dc/digitalocean-doctl-cli"
+chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "/dc/digitalocean-doctl-cli"
 
 # if `.config/doctl` already exists, the `ln -s` command will create an extra 
 # folder *inside* `.config/doctl` that symlinks to `digitalocean-doctl-cli`
