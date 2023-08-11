@@ -3,8 +3,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:jammy",
         "features": {
             "digitalocean-doctl-cli-persistence": {}
-        },
-        "remoteUser": "vscode"
+        }
     },
     "existing_doctl_config": {
         "image": "ubuntu:jammy",
