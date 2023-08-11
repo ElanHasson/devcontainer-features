@@ -13,8 +13,8 @@ check "Only one symlink exists" [ "$(find $HOME/.config -name 'doctl' | wc -l)" 
 check "Symlink points to the right location" [ "$(readlink $HOME/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
 owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
 check "Ownership of /dc/digitalocean-doctl-cli is correct: $owner = $(whoami)" [ "$owner" = "$(whoami)" ]
-symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
 
+symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
 if [ "$symlink_owner" -ne "UNKNOWN"]; then
     check "Ownership of symlink is correct" [ "$symlink_owner" = "$(whoami)" ]
 fi
