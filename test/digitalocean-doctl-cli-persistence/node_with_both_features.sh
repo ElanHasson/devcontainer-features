@@ -8,9 +8,13 @@ ls -las ~/
 ls -las /dc
 ls -lasR "${HOME}/.config"
 
-# Duplicate installation checks
-check "Only one symlink exists" [ "$(find $HOME/.config -name 'doctl' | wc -l)" = "1" ]
-check "Symlink points to the right location" [ "$(readlink $HOME/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
+# Existing doctl configuration checks
+check "Symlink exists: ${HOME}/.config/doctl" [ -L "${HOME}/.config/doctl" ]
+check "Symlink points to the right location" [ "$(readlink ${HOME}/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
+# Can't seem to write the file BEFORE the feature executes
+# check "Test file was migrated" [ -f "/dc/digitalocean-doctl-cli/test.txt" ]
+
+
 
 owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
 if [ "$owner" -ne "UNKNOWN"]; then

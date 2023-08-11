@@ -1,5 +1,25 @@
 {
-    "with_node": {
+    "default_behavior": {
+        "image": "mcr.microsoft.com/devcontainers/base:jammy",
+        "features": {
+            "digitalocean-doctl-cli-persistence": {}
+        }
+    },
+    "existing_doctl_config": {
+        "image": "ubuntu:jammy",
+        "features": {
+            "digitalocean-doctl-cli-persistence": {}
+        },
+        "onCreateCommand": "mkdir -p ${_REMOTE_USER_HOME}/.config/doctl && echo 'test' > ${_REMOTE_USER_HOME}/.config/doctl/test.txt"
+    },
+    "ubuntu_with_both_features": {
+        "image": "mcr.microsoft.com/devcontainers/base:jammy",
+        "features": {
+            "digitalocean-doctl-cli-persistence": {},
+            "ghcr.io/devcontainers-contrib/features/digitalocean-cli": {}
+        }
+    },
+    "node_with_both_features": {
         "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
         "features": {
             "digitalocean-doctl-cli-persistence": {},

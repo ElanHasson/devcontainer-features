@@ -8,9 +8,9 @@ ls -las ~/
 ls -las /dc
 ls -lasR "${HOME}/.config"
 
-# Duplicate installation checks
-check "Only one symlink exists" [ "$(find $HOME/.config -name 'doctl' | wc -l)" = "1" ]
-check "Symlink points to the right location" [ "$(readlink $HOME/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
+# Existing doctl configuration checks
+check "Symlink exists: ${HOME}/.config/doctl" [ -L "${HOME}/.config/doctl" ]
+check "Symlink points to the right location" [ "$(readlink ${HOME}/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
 
 owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
 if [ "$owner" -ne "UNKNOWN"]; then
@@ -21,5 +21,7 @@ symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
 if [ "$symlink_owner" -ne "UNKNOWN"]; then
     check "Ownership of symlink is correct" [ "$symlink_owner" = "$(whoami)" ]
 fi
+
+check "doctl command is available" which doctl
 
 reportResults

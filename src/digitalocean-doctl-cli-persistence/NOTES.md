@@ -1,3 +1,10 @@
+## Changelog
+
+| Version | Notes                                                |
+| ------- | ---------------------------------------------------- |
+| 1.1.0   | Improved ownership handling and added support to merge any existing doctl configuration into new folder so no configuration is lost. |
+| 1.0.0   | Initial Version                                      |
+
 ## OS and Architecture Support
 
 |        | amd64 | arm64 |
@@ -7,12 +14,6 @@
 
 - ✅: Tested and verified on Github Actions
 - ❓: Who knows?
-
-## Changelog
-
-| Version | Notes                                                |
-| ------- | ---------------------------------------------------- |
-| 1.0.0   | Initial Version                                      |
 
 ## References
 
