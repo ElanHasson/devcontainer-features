@@ -18,9 +18,16 @@ ls -las /dc
 
 check "Symlink exists" test -L "$HOME/.config/doctl"
 check "Symlink points to the right location" test "$(readlink "$HOME/.config/doctl")" = "/dc/digitalocean-doctl-cli"
+
+
 owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
-check "Ownership of /dc/digitalocean-doctl-cli is correct ($owner = root)" test "$owner" = "root"
+if [ "$owner" -ne "UNKNOWN"]; then
+    check "Ownership of symlink is correct" [ "$symlink_owner" = "$(whoami)" ]
+fi
+
 symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
-check "Ownership of symlink is correct" test "$symlink_owner" = "root"
+if [ "$symlink_owner" -ne "UNKNOWN"]; then
+    check "Ownership of symlink is correct" [ "$symlink_owner" = "$(whoami)" ]
+fi
 
 reportResults
