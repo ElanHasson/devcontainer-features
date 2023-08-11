@@ -6,7 +6,7 @@ set -e
 source dev-container-features-test-lib
 
 # check that `doctl --help` works
-check "help" bash -c "doctl --help | grep 'USAGE'"
+check "help" bash -c "doctl --help | grep 'doctl is a command line interface (CLI) for the DigitalOcean API.'"
 
 # check that `.config/doctl` and `/dc/digitalocean-doctl-cli` exist under the user (should be node)
 check "config" bash -c "ls -la ~/.config | grep 'doctl'"
