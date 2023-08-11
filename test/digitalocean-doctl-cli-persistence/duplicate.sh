@@ -1,19 +1,20 @@
 #!/bin/bash
-
 set -e
-
-# Optional: Import test library
 source dev-container-features-test-lib
 
-# check that `~/.config/doctl` and `/dc/digitalocean-doctl-cli` exist`
-check "config" bash -c "ls -la ~/.config | grep 'doctl'"
-check "dc" bash -c "ls -la /dc | grep 'digitalocean-doctl-cli'"
+whoami
+ls -las ~/
 
-# check that `~/.config/doctl` is a symlink
-# https://unix.stackexchange.com/a/96910
-check "~/.config/doctl is a symlink" bash -c "test -L ~/.config/doctl && test -d ~/.config/doctl"
+ls -las /dc
+ls -lasR "${HOME}/.config"
+ 
 
+# Duplicate installation checks
+check "Only one symlink exists" [ "$(find $HOME/.config -name 'doctl' | wc -l)" = "1" ]
+check "Symlink points to the right location" [ "$(readlink $HOME/.config/doctl)" = "/dc/digitalocean-doctl-cli" ]
+owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
+check "Ownership of /dc/digitalocean-doctl-cli is correct" [ "$owner" = "$(whoami)" ]
+symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
+check "Ownership of symlink is correct" [ "$symlink_owner" = "$(whoami)" ]
 
-# Report result
 reportResults
-

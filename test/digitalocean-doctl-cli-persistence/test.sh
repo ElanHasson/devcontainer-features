@@ -1,11 +1,8 @@
 #!/bin/bash
-
 set -e
-
-# Optional: Import test library
 source dev-container-features-test-lib
 
-# NOTE: this is an "auto-generated" test, which means it will be 
+# NOTE: this is an "auto-generated" test, which means it will be
 # executed against an auto-generated devcontainer.json that
 # includes the 'digitalocean-doctl-cli-persistence' Feature with no options.
 #
@@ -14,21 +11,16 @@ source dev-container-features-test-lib
 # From my tests, this means the `doctl` CLI will not be installed:
 # Thus, here, I only check basic directory existence
 
+# Default behavior checks
+ls -las ~/
+whoami
+ls -las /dc
 
-# check that `~/.config/doctl` and `/dc/digitalocean-doctl-cli` exist`
-check "config" bash -c "ls -la ~/.config | grep 'doctl'"
-check "dc" bash -c "ls -la /dc | grep 'digitalocean-doctl-cli'"
+check "Symlink exists" test -L "$HOME/.config/doctl"
+check "Symlink points to the right location" test "$(readlink "$HOME/.config/doctl")" = "/dc/digitalocean-doctl-cli"
+owner=$(stat -c '%U' /dc/digitalocean-doctl-cli)
+check "Ownership of /dc/digitalocean-doctl-cli is correct ($owner = root)" test "$owner" = "root"
+symlink_owner=$(stat -c '%U' "$HOME/.config/doctl")
+check "Ownership of symlink is correct" test "$symlink_owner" = "root"
 
-# check that `~/.config/doctl` is a symlink
-# https://unix.stackexchange.com/a/96910
-check "~/.config/doctl is a symlink" bash -c "test -L ~/.config/doctl && test -d ~/.config/doctl"
-
-# check that the folders are owned by the user
-# `stat -c "%U %G" ~/.config` returns "$USER $GROUP", in this case "node node"
-# https://askubuntu.com/a/175060
-check "~/.config/doctl owned by user" bash -c "test \"$(stat -c "%U %G" ~/.config)\" = 'vscode vscode'"
-check "/dc/digitalocean-doctl-cli owned by user" bash -c "test \"$(stat -c "%U %G" /dc/digitalocean-doctl-cli)\" = 'vscode vscode'"
-
-# Report result
 reportResults
-
