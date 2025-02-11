@@ -9,4 +9,3 @@ This repo contains my custom devcontainer features.
 | Feature                                                      | Description                                                                                                             |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
 | [digitalocean-doctl-cli-persistence](./src/digitalocean-doctl-cli-persistence)       | Avoid extra logins from the DigitalOcean `doctl` CLI by preserving the `~/.config/doctl` folder across container instances.              |
-| [dotnet-aspire-daily](./src/dotnet-aspire-daily) | installs .NET Aspire daily builds.|
